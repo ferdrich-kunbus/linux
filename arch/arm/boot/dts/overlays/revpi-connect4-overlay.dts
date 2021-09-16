@@ -76,6 +76,14 @@
 				interrupt-parent = <&gpio>;
 				interrupts = <8 IRQ_TYPE_LEVEL_LOW>;
 			};
+
+			rtc@51 {
+				/* 100kHz, 400kHz */
+				compatible = "nxp,pcf2129";
+				reg = <0x51>;
+				status = "okay";
+				reset-source;
+			};
 		};
 	};
 };
