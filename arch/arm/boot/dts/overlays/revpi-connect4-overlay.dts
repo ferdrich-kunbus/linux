@@ -23,6 +23,11 @@
 				brcm,pins     = <2 3>;
 				brcm,function = <BCM2835_FSEL_ALT5>;
 			};
+			exp_core_pins: exp_core_pins {
+				brcm,pins     = <8>;
+				brcm,function = <BCM2835_FSEL_GPIO_IN>;
+				brcm,pull     = <BCM2835_PUD_OFF>;
+			};
 		};
 	};
 
@@ -36,6 +41,21 @@
 			pinctrl-0 = <&i2c3_pins>;
 			clock-frequency = <400000>;
 			status = "okay";
+
+			expander_core: gpio@22 {
+				/* 100kHz, 400kHz */
+				compatible = "nxp,pcal6524";
+				pinctrl-names = "default";
+				pinctrl-0 = <&exp_core_pins>;
+				reg = <0x22>;
+				gpio-controller;
+				#gpio-cells = <2>;
+				status = "okay";
+				interrupt-controller;
+				#interrupt-cells = <2>;
+				interrupt-parent = <&gpio>;
+				interrupts = <8 IRQ_TYPE_LEVEL_LOW>;
+			};
 		};
 	};
 };
