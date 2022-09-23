@@ -1,0 +1,56 @@
+# SPDX-License-Identifier: GPL-2.0-only
+config WLAN_VENDOR_NXP
+	bool "NXP devices"
+	default y
+	help
+	  If you have a wireless card belonging to this class, say Y.
+
+	  Note that the answer to this question doesn't directly affect the
+	  kernel: saying N will just cause the configurator to skip all the
+	  questions about these cards. If you say Y, you will be asked for
+	  your specific card in the following questions.
+
+if WLAN_VENDOR_NXP
+
+config NXP_8978
+	tristate "NXP SD8978 chipset 802.11b support"
+	depends on CFG80211 && (USB || MMC)
+	select WIRELESS_EXT
+	help
+	  Many  cards based on this chipset do not have flash memory
+	  and need their firmware loaded at start-up. If yours is
+
+config SDIO_8978
+	tristate "NXP SDIO"
+	depends on NXP && MMC
+  select FW_LOADER
+	help
+	  Enable support for SDIO based wireless cards containing the
+	  NXP SD8978 (IW416) chip.
+
+config USB_8978
+	tristate "NXP USB"
+	depends on NXP && USB && MAC80211
+	select FW_LOADER
+	help
+	  Enable support for USB cards containing the
+	  NXP SD8978 (IW416) chip.
+
+# config STA_SUPPORT
+# config UAP_SUPPORT
+# config WIFI_DIRECT_SUPPORT
+# config REASSOCIATION
+# config MFG_CMD_SUPPORT
+# config SDIO_SUSPEND_RESUME
+# config DFS_TESTING_SUPPORT
+
+
+#config AT76C50X_USB
+#	tristate "Atmel at76c503/at76c505/at76c505a USB cards"
+#	depends on MAC80211 && USB
+#	select FW_LOADER
+#	help
+#	  Enable support for USB Wireless devices using Atmel at76c503,
+#	  at76c505 or at76c505a chips.
+
+endif # WLAN_VENDOR_ATMEL
